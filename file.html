@@ -67,16 +67,24 @@
                 */
                 // Get the top-left and bottom-right coordinates of the faces by using for loop.
                 for (let i = 0; i < predictions.length; i++) {
+                    const rightEye = predictions[i].landmarks[0];
+                    const leftEye = predictions[i].landmarks[1];
                     const start = predictions[i].topLeft;
                     const end = predictions[i].bottomRight;
                     const size = [end[0] - start[0], end[1] - start[1]];
 
-                    // Render a solid black rectangle over each detected face.
+                    // Render a rectangle over each detected face.
                     // ctx.fillRect(start[0], start[1], size[0], size[1]);
 
                     // Render a clear image in face.
                     const faceArea = new Path2D();    // create a new Path2D object
-                    faceArea.rect(start[0], start[1], size[0], size[1]);
+                    // Calculate the center of the face as the midpoint between the rightEye and leftEye coordinates.
+                    faceArea.ellipse(
+                        (leftEye[0] + rightEye[0]) / 2, 
+                        (leftEye[1] + rightEye[1]) / 2,
+                        size[0] / 2, size[1] * 0.8,
+                        0, 0, 2 * Math.PI
+                        );
 
                     // Only draw the image at the coordinates defined above a.k.a. the face part.
                     ctx.save();
