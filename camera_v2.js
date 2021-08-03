@@ -1,33 +1,60 @@
 const videoElement = document.querySelector("#video");
 const canvas = document.querySelector("#cvs");
+const ctx = canvas.getContext("2d");
 
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const blurBtn = document.getElementById('blur-btn');
+const unblurBtn = document.getElementById('unblur-btn');
 
-videoElement.onplaying = () => {
-    canvas.height = videoElement.videoHeight;
-    canvas.width = videoElement.videoWidth;
-};
+startBtn.addEventListener('click', event => {
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
 
+    unblurBtn.disabled = false;
+    blurBtn.disabled = false;
 
-
-async function loadAndPredict() {
-    /**
-     * One of (see documentation below):
-     *   - net.segmentPerson
-     *   - net.segmentPersonParts
-     *   - net.segmentMultiPerson
-     *   - net.segmentMultiPersonParts
-     * See documentation below for details on each method.
-     */
-    // video.addEventListener("loadeddata", () => {
-    //     // Call the draw function every 10ms.
-    // window.setInterval(draw, 10);
-    // });
-
-    // Obtain video in browser and play it
     playVideo();
+});
+
+stopBtn.addEventListener('click', event => {
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+
+    unblurBtn.disabled = true;
+    blurBtn.disabled = true;
+
+    unblurBtn.hidden = true;
+    blurBtn.hidden = false;
+
+    videoElement.hidden = false;
+    canvas.hidden = true;
+
+    stopVideo();
+});
+
+blurBtn.addEventListener('click', event => {
+    blurBtn.hidden = true;
+    unblurBtn.hidden = false;
+
+    videoElement.hidden = true;
+    canvas.hidden = false;
+
     loadBodyPix();
-}
-loadAndPredict();
+});
+
+unblurBtn.addEventListener('click', event => {
+    blurBtn.hidden = false;
+    unblurBtn.hidden = true;
+
+    videoElement.hidden = false;
+    canvas.hidden = true;
+});
+
+videoElement.addEventListener('playing', () => {
+    ctx.height = videoElement.videoHeight;
+    ctx.width = videoElement.videoWidth;
+});
 
 
 function playVideo() {
@@ -36,28 +63,44 @@ function playVideo() {
             videoElement.srcObject = stream;
             videoElement.play();
         })
-        .catch(err => console.log(err));
+        .catch(err => {
+            startBtn.disabled = false;
+            blurBtn.disabled = true;
+            stopBtn.disabled = true;
+            alert(`Following error occured: ${err}`);
+        });
+}
+
+function stopVideo() {
+    const stream = videoElement.srcObject;
+
+    stream.getTracks().forEach(track => track.stop());
+    videoElement.srcObject = null;
 }
 
 function loadBodyPix() {
-    options = {
+    params = {
+        // It is the float multiplier for the depth (number of channels) for all convolution ops. 
         multiplier: 0.75,
+        // It specifies the output stride of the BodyPix model. 
         stride: 32,
+        // This argument controls the bytes used for weight quantization.
         quantBytes: 4
     }
-    bodyPix.load(options)
+    bodyPix.load(params)
         .then(net => draw(net))
         .catch(err => console.log(err))
 }
-
 async function draw(net) {
-        const segmentation = await net.segmentPerson(video);
+    while (startBtn.disabled && blurBtn.hidden) {
+        const segmentation = await net.segmentPerson(videoElement);
 
         const backgroundBlurAmount = 6;
         const edgeBlurAmount = 3;
         const flipHorizontal = true;
         // Draw the image with the background blurred onto the canvas. The edge between
         // the person and blurred background is blurred by 3 pixels.
-        bodyPix.drawBokehEffect(canvas, videoElement, segmentation, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);
+        bodyPix.drawBokehEffect(
+            canvas, videoElement, segmentation, backgroundBlurAmount, edgeBlurAmount, flipHorizontal);
+    }
 }
-
