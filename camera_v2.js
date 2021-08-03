@@ -1,3 +1,5 @@
+/* pre-trained TensorFlow.js models: https://github.com/tensorflow/tfjs-models/tree/master/body-pix */
+
 const videoElement = document.querySelector("#video");
 const canvas = document.querySelector("#cvs");
 const ctx = canvas.getContext("2d");
