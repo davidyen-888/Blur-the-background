@@ -6,14 +6,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Camera Input Detection</title>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/blazeface"></script>
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+        integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <!-- Load TensorFlow.js -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@1.2"></script>
+    <!-- Load BodyPix -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
 </head>
 
 <body>
-    <!-- <video id="video" style="display: none;"></video> -->
+    <video id="video" width="960" height="640"></video>
     <canvas id="cvs"></canvas>
-    <script src="camera.js"></script>
+    <div class="justify-content-between align-items-center">
+        <div class="btn-group btn-group-sm">
+            <button id="start-btn" type="button" class="btn btn-sm btn-outline-success">Start</button>
+            <button id="blur-btn" type="button" class="btn btn-sm btn-outline-secondary" disabled>Blur</button>
+            <button id="unblur-btn" type="button" class="btn btn-sm btn-outline-secondary" hidden>Unblur</button>
+            <button id="stop-btn" type="button" class="btn btn-sm btn-outline-danger" disabled>Stop</button>
+        </div>
+    </div>
+    <script src="camera_v2.js"></script>
 </body>
 
 </html>
