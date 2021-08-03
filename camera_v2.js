@@ -7,7 +7,7 @@ const stopBtn = document.getElementById('stop-btn');
 const blurBtn = document.getElementById('blur-btn');
 const unblurBtn = document.getElementById('unblur-btn');
 
-startBtn.addEventListener('click', event => {
+startBtn.addEventListener('click', e => {
     startBtn.disabled = true;
     stopBtn.disabled = false;
 
@@ -17,7 +17,7 @@ startBtn.addEventListener('click', event => {
     playVideo();
 });
 
-stopBtn.addEventListener('click', event => {
+stopBtn.addEventListener('click', e => {
     startBtn.disabled = false;
     stopBtn.disabled = true;
 
@@ -33,7 +33,7 @@ stopBtn.addEventListener('click', event => {
     stopVideo();
 });
 
-blurBtn.addEventListener('click', event => {
+blurBtn.addEventListener('click', e => {
     blurBtn.hidden = true;
     unblurBtn.hidden = false;
 
@@ -43,7 +43,7 @@ blurBtn.addEventListener('click', event => {
     loadBodyPix();
 });
 
-unblurBtn.addEventListener('click', event => {
+unblurBtn.addEventListener('click', e => {
     blurBtn.hidden = false;
     unblurBtn.hidden = true;
 

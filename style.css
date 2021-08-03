@@ -1,3 +1,11 @@
+#body {
+    text-align: center;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    background-image: url(https://images.unsplash.com/photo-1501420264597-23296a7e6a46?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=2710&q=80);
+    background-size: cover;
+    color: white;
+}
+
 #video {
     transform: rotateY(180deg);
     /* Safari and Chrome */
@@ -6,3 +14,4 @@
     -moz-transform: rotateY(180deg);
     width: 100%;
 }
+

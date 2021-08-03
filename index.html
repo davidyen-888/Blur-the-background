@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Camera Input Detection</title>
+    <title>Blur The Background</title>
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
     <!-- Bootstrap CSS -->
@@ -17,16 +17,31 @@
     <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/body-pix@2.0"></script>
 </head>
 
-<body>
-    <video id="video" width="960" height="640"></video>
-    <canvas id="cvs"></canvas>
-    <div class="justify-content-between align-items-center">
-        <div class="btn-group btn-group-sm">
-            <button id="start-btn" type="button" class="btn btn-sm btn-outline-success">Start</button>
-            <button id="blur-btn" type="button" class="btn btn-sm btn-outline-secondary" disabled>Blur</button>
-            <button id="unblur-btn" type="button" class="btn btn-sm btn-outline-secondary" hidden>Unblur</button>
-            <button id="stop-btn" type="button" class="btn btn-sm btn-outline-danger" disabled>Stop</button>
-        </div>
+<body id="body">
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <video id="video" width="720" height="480"></video>
+                    <canvas id="cvs" hidden></canvas>
+                </div>
+            </div>   
+            <div class="row">
+                <div class="col-md-12">
+                    <h1>Blur The Background</h1>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <p>Click on start, then click on blur to try the effect!</p>
+                </div>
+            </div>
+    </section>
+    <div id="btn-group" class="btn-group btn-group-lg">
+        <button id="start-btn" type="button" class="btn btn-lg btn-outline-success">Start</button>
+        <button id="blur-btn" type="button" class="btn btn-lg btn-outline-secondary" disabled>Blur</button>
+        <button id="unblur-btn" type="button" class="btn btn-lg btn-outline-secondary" hidden>Unblur</button>
+        <button id="stop-btn" type="button" class="btn btn-lg btn-outline-danger" disabled>Stop</button>
     </div>
     <script src="camera_v2.js"></script>
 </body>
